@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Integer, ForeignKey, UniqueConstraint
 from .base import Base
 
@@ -13,3 +13,4 @@ class User(Base):
     state: Mapped[int] = mapped_column(Integer, nullable=False)
 
     UniqueConstraint(email, name='UQ_email')
+    role = relationship("Role", back_populates="user")

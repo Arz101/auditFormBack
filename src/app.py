@@ -14,8 +14,9 @@ def create_app():
     )   
     app.include_router(audit, prefix="/audit")
     app.include_router(auth, prefix="/auth")
-    app.include_router(user, prefix="/user")
-    app.include_router(store, prefix="/store")
+    app.include_router(user, prefix="/users")
+    app.include_router(store, prefix="/stores")
     app.include_router(quest, prefix="/quest")
+    app.include_router(roles, prefix="/roles")
 
     return app

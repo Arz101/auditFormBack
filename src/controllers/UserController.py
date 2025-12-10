@@ -2,7 +2,7 @@ from src.repositories import UserRepository
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from pwdlib import PasswordHash
-from src.schemas import UserResponse, UserAccess, UserCreate
+from src.schemas import UserResponse, LoginResponse, UserCreate
 from src.models import User
 from datetime import datetime, timezone, timedelta
 from dotenv import load_dotenv
@@ -25,12 +25,7 @@ class UserController:
             user = self.userRepo.verifyUser(email, db)
             if user:
                 if self.verify_password(user, password):
-                    return UserAccess(
-                        id=user.id,
-                        email=user.email,
-                        roleId=user.roleId,
-                        state=user.state
-                    )
+                    return self.userRepo.getUserByID(user.id, db)
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 

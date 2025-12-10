@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from src.config import get_db
 from src.controllers import UserController
-from src.schemas import UserCreate, UserResponse
+from src.schemas import UserCreate, UserResponse, LoginResponse, UserWithRole
 from sqlalchemy.orm import Session
 from .authRoutes import get_current_user
 
@@ -13,6 +13,6 @@ user_controller = UserController()
 def createUser(payload: UserCreate, db: Session = Depends(get_db)):
     return user_controller.create_user(payload, db)
 
-@user.get("/", response_model=list[UserResponse], status_code=200)
+@user.get("/", response_model=list[UserWithRole], status_code=200)
 def getUsers(db: Session = Depends(get_db), rol = Depends(get_current_user)):
     return user_controller.getUsers(db, rol)
