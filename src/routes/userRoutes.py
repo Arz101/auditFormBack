@@ -15,4 +15,4 @@ def createUser(payload: UserCreate, db: Session = Depends(get_db)):
 
 @user.get("/", response_model=list[UserResponse], status_code=200)
 def getUsers(db: Session = Depends(get_db), rol = Depends(get_current_user)):
-    return user_controller.get_user(db, rol)
+    return user_controller.getUsers(db, rol)

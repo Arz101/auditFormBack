@@ -1,16 +1,16 @@
 from typing import Annotated
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from typing import Annotated
 from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from pwdlib import PasswordHash
 from src.controllers import UserController
 from src.config import get_db
 from src.schemas import UserAccess
 from jwt.exceptions import InvalidTokenError
 import jwt
 from pydantic import BaseModel
+from src.models import User
 
 auth = APIRouter()
 user_controller = UserController()
@@ -38,7 +38,7 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Sessio
     return Token(access_token=access_token, token_type="bearer")
 
 
-def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)) -> User:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate Credentials",

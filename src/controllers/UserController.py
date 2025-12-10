@@ -1,6 +1,6 @@
 from src.repositories import UserRepository
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, status, Depends
+from fastapi import HTTPException
 from pwdlib import PasswordHash
 from src.schemas import UserResponse, UserAccess, UserCreate
 from src.models import User
@@ -8,7 +8,6 @@ from datetime import datetime, timezone, timedelta
 from dotenv import load_dotenv
 import os
 import jwt
-from typing import Annotated
 
 load_dotenv()
 
@@ -68,8 +67,6 @@ class UserController:
             raise HTTPException(status_code=500, detail=str(e))
 
     def getUsers(self, db: Session, user: User):
-        if user is None:
-            raise HTTPException(status_code=401, detail="No Authentication")
         if user.roleId != 1:
             raise HTTPException(status_code=401, detail="No Authentication")
         

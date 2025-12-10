@@ -51,7 +51,7 @@ class UserRepository:
     
     def getUsers(self, db: Session):
         try:
-            query = select(User)
+            query = select(User).where(User.state == 1)
             result = db.execute(query).scalars().all()
             if result:
                 return result
