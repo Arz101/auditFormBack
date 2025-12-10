@@ -21,11 +21,14 @@ class UserResponse(UserBase):
     class Config:
         from_attributes = True
 
-class UserAccess:
+class UserAccess(BaseModel):
     id: int
     email: str
     roleId: int
-    stateL: int
+    state: int
+
+    class Config:
+        from_attributes = True
 
 class UserUpdate(BaseModel):
     name: str | None

@@ -8,7 +8,6 @@ from datetime import datetime, timezone, timedelta
 from dotenv import load_dotenv
 import os
 import jwt
-from jwt.exceptions import JWTException
 from typing import Annotated
 
 load_dotenv()
@@ -20,7 +19,7 @@ class UserController:
         self.passwordHash = PasswordHash.recommended()
         self.ALGORITHM = os.getenv('ALGORITHM')
         self.SECRET_KEY= os.getenv('SECRET_KEY')
-        self.ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES')
+        self.ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
 
     def verifyUser(self, email: str, password: str, db: Session):
         try:
@@ -28,16 +27,16 @@ class UserController:
             if user:
                 if self.verify_password(user, password):
                     return UserAccess(
-                        user.id,
-                        user.email,
-                        user.roleId,
-                        user.state
+                        id=user.id,
+                        email=user.email,
+                        roleId=user.roleId,
+                        state=user.state
                     )
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
     def verify_password(self, user: UserResponse, password: str):
-        return PasswordHash.verify(password, user.passwordHash)
+        return self.passwordHash.verify(password, user.passwordHash)
     
     def create_access_token(self, data: dict, expires_delta: timedelta | None = None):
         to_encode = data.copy()
