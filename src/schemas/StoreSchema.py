@@ -4,8 +4,8 @@ from pydantic import BaseModel
 class StoreBase(BaseModel):
     name: str
     storeNumber: str
-    address: str
-    state: int
+    address: str | None = None
+    state: int | None = 1
 
 class StoreCreate(StoreBase):
     pass

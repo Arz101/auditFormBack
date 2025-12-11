@@ -4,6 +4,8 @@ from .userRoutes import user
 from .storeRoutes import store
 from .questionRoutes import quest
 from .roleRoutes import roles
+from .sectionsRoute import sections
+from .categoryRoutes import category
 
 
 __all__ = [
@@ -12,5 +14,7 @@ __all__ = [
     'user',
     'store',
     'quest',
-    'roles'
+    'roles',
+    'sections',
+    'category'
 ]

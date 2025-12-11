@@ -20,6 +20,8 @@ class StoreController:
 
     def getstores(self, db: Session):
         try:
-            return self.storeRepo.getStores(db)
+            result = self.storeRepo.getStores(db)
+            if result:
+                return [StoreResponse.model_validate(d) for d in result]
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))

@@ -12,11 +12,13 @@ def create_app():
         allow_methods=["GET", "POST", "PUT", "DELETE"],
         allow_headers=["*"],
     )   
-    app.include_router(audit, prefix="/audit")
+    app.include_router(audit, prefix="/audits")
     app.include_router(auth, prefix="/auth")
     app.include_router(user, prefix="/users")
     app.include_router(store, prefix="/stores")
-    app.include_router(quest, prefix="/quest")
+    app.include_router(quest, prefix="/questions")
     app.include_router(roles, prefix="/roles")
+    app.include_router(sections, prefix="/sections")
+    app.include_router(category, prefix="/categories")
 
     return app

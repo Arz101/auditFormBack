@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, Integer, UniqueConstraint
+from sqlalchemy import String, Integer, UniqueConstraint, func
+from sqlalchemy.dialects.mssql import DATETIMEOFFSET
+from datetime import datetime
 from .base import Base
 
 class Store(Base):
@@ -10,6 +12,8 @@ class Store(Base):
     storeNumber: Mapped[str] = mapped_column(String(120), nullable=False)
     address: Mapped[str] = mapped_column(String(120), nullable=False)
     state: Mapped[int] = mapped_column(Integer, nullable=False)
+    createdAt: Mapped[datetime] = mapped_column(DATETIMEOFFSET, nullable=False, server_default=func.sysdatetimeoffset())
+    updatedAt: Mapped[datetime] = mapped_column(DATETIMEOFFSET, nullable=False, server_default=func.sysdatetimeoffset(), onupdate=func.sysdatetimeoffset())
 
     UniqueConstraint(storeNumber,name='UQ_storeNumber')
 

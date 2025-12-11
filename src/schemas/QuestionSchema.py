@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 class QuestionBase(BaseModel):
     text: str
-    category_id: int
+    categoryId: int
     state: int
 
 class QuestionCreate(QuestionBase):
@@ -16,5 +16,5 @@ class QuestionResponse(QuestionBase):
 
 class QuestionUpdate(BaseModel):
     text: str | None
-    category_id: int | None
+    categoryId: int | None
     state: int | None

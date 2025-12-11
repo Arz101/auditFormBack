@@ -1,16 +1,16 @@
 from pydantic import BaseModel, field_validator, model_validator
-from datetime import date
 from .StoreSchema import StoreResponse
+import datetime
 
 class AuditBase(BaseModel):
-    user_id: int
-    store_id: int
-    contact_name: str | None = None
-    audit_date: date
-    start_time: str | None = None
-    end_time: str | None = None
-    initial_score: int
-    final_score: int | None = None
+    userId: int
+    storeId: int
+    contactName: str | None = None
+    date: datetime.date
+    startTime: str | None = None
+    endTime: str | None = None
+    initialScore: int
+    finalScore: int | None = None
     observations: str | None = None
     state: int
 
@@ -18,11 +18,11 @@ class AuditCreate(AuditBase):
     pass
 
 class AuditUpdate(BaseModel):
-    contact_name: str | None = None
-    start_time: str | None = None
-    end_time: str | None = None
-    initial_score: int | None = None
-    final_score: int | None = None
+    contactName: str | None = None
+    startTime: str | None = None
+    endTime: str | None = None
+    initialScore: int | None = None
+    finalScore: int | None = None
     observations: str | None = None
     state: int | None = None
 
@@ -40,7 +40,7 @@ class AuditResponse(AuditBase):
         from_attributes = True 
 
 class AuditResponseDate(BaseModel):
-    audit_date: date
+    date: datetime.date
 
     class Config:
         from_attributes = True 

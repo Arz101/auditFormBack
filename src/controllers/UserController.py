@@ -22,7 +22,7 @@ class UserController:
 
     def verifyUser(self, email: str, password: str, db: Session):
         try:
-            user = self.userRepo.verifyUser(email, db)
+            user: User = self.userRepo.verifyUser(email, db)
             if user:
                 if self.verify_password(user, password):
                     return self.userRepo.getUserByID(user.id, db)

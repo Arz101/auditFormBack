@@ -12,7 +12,7 @@ class AuditRepository:
 
     def create(self, audit: AuditCreate, db: Session):
         try:
-            result = select(Audit).where(and_(Audit.store_id == audit.store_id, Audit.audit_date == audit.audit_date))
+            result = select(Audit).where(and_(Audit.storeId == audit.storeId, Audit.date == audit.date))
             
             existing_audit = db.execute(result).scalar_one_or_none()
             if existing_audit:
@@ -33,13 +33,13 @@ class AuditRepository:
                 query = (
                     select(Audit)
                     .options(selectinload(Audit.store))
-                    .where(and_(Audit.audit_date == auditDate, Audit.store_id == storeId))
+                    .where(and_(Audit.date == auditDate, Audit.storeId == storeId))
                 )
             else:
                 query = (
                     select(Audit)
                     .options(selectinload(Audit.store))
-                    .where(Audit.audit_date == auditDate)
+                    .where(Audit.date == auditDate)
                 )
             audits = db.execute(query).scalars().all()
             return audits   
@@ -68,11 +68,11 @@ class AuditRepository:
         
     def getAuditDates(self, storeId: int, db: Session):
         try:
-            query = select(Audit.audit_date).where(Audit.store_id == storeId)
+            query = select(Audit.date).where(Audit.storeId == storeId)
             result = db.execute(query).scalars().all()
 
             if result:
-                return [{"audit_date": d} for d in result]
+                return [{"date": d} for d in result]
             return None
         except Exception as e:
             raise e

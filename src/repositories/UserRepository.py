@@ -13,8 +13,7 @@ class UserRepository:
     def verifyUser(self, email: str, db: Session):
         try:
             query = (
-                select(User)
-                .where(User.email == email)
+                select(User).where(User.email == email)
             )
             result = db.execute(query).scalar_one_or_none()
 

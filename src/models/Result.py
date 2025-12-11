@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, Integer, ForeignKey
+from sqlalchemy import String, Integer, ForeignKey, func
+from sqlalchemy.dialects.mssql import DATETIMEOFFSET
+from datetime import datetime
 from .base import Base
 
 class Result(Base):
@@ -13,3 +15,5 @@ class Result(Base):
     state: Mapped[int] = mapped_column(Integer, nullable=False)
     observations: Mapped[str | None] = mapped_column(String, nullable=True)
     photoPath: Mapped[str | None] = mapped_column(String, nullable=True)
+    createdAt: Mapped[datetime] = mapped_column(DATETIMEOFFSET, nullable=False, server_default=func.sysdatetimeoffset())
+    updatedAt: Mapped[datetime] = mapped_column(DATETIMEOFFSET, nullable=False, server_default=func.sysdatetimeoffset(), onupdate=func.sysdatetimeoffset())

@@ -1,4 +1,4 @@
-from src.schemas import AuditCreate
+from src.schemas import AuditCreate, AuditResponse
 from src.repositories import AuditRepository
 from fastapi import HTTPException
 from src.config import engine
@@ -27,7 +27,7 @@ class AuditController:
             result = self.audit_repository.getAudits(auditDate, storeId, db)
             if result is None:
                 raise HTTPException(status_code=404, detail="A")
-            return result
+            return [AuditResponse.model_validate(d) for d in result]
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
