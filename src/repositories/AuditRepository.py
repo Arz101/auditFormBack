@@ -27,19 +27,24 @@ class AuditRepository:
             db.rollback()
             raise e
         
-    def getAudits(self, auditDate: date, storeId: int | None, db: Session):
+    def getAudits(self, auditDate: date | None, storeId: int | None, db: Session):
         try:
-            if storeId:
+            if storeId and auditDate:
                 query = (
                     select(Audit)
                     .options(selectinload(Audit.store))
                     .where(and_(Audit.date == auditDate, Audit.storeId == storeId))
                 )
-            else:
+            elif storeId and auditDate is None:
                 query = (
                     select(Audit)
                     .options(selectinload(Audit.store))
                     .where(Audit.date == auditDate)
+                )
+            else:
+                query = (
+                    select(Audit)
+                    .options(selectinload(Audit.store))
                 )
             audits = db.execute(query).scalars().all()
             return audits   

@@ -5,3 +5,4 @@ from .QuestionSchema import QuestionCreate, QuestionResponse, QuestionUpdate
 from .RoleSchema import RoleCreate, RoleResponse
 from .SectionSchema import SectionCreate, SectionResponse
 from .CategorySchema import CategoryCreate, CategoryResponse
+from .ResultSchema import ResultCreate, ResultResponse

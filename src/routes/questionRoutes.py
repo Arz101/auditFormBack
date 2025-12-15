@@ -30,3 +30,6 @@ def updateQuestion(id: int, payload: QuestionUpdate, db: Session = Depends(get_d
 def deleteQuestionByID(id: int, db: Session = Depends(get_db), userRol: User = Depends(get_current_user)):
     return quest_controller.deleteQuestion(id, db, userRol.roleId)
 
+@quest.get('/by-role')
+def getQuestionByRole(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    pass

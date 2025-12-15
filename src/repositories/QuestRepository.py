@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select, delete
 from src.schemas import QuestionResponse, QuestionCreate
-from src.models import Question
+from src.models import Question, Category
 
 class QuestRepository:
     def __init__(self):
@@ -43,4 +43,22 @@ class QuestRepository:
             return 1
         except Exception as e:
             db.rollback()
+            raise e
+
+    def getQuestByRole(self, roleId: int, db: Session):
+        try:
+            if roleId == 1:
+                query = select(Question).where(Question.state == 1)
+                result = db.execute(query).scalars().all()
+                if result:
+                    return result
+
+            elif roleId == 2:
+                query = (
+                    select(Question)
+                    .join(Category, )
+                )
+
+
+        except Exception as e:
             raise e

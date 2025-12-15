@@ -6,6 +6,7 @@ from .questionRoutes import quest
 from .roleRoutes import roles
 from .sectionsRoute import sections
 from .categoryRoutes import category
+from .resultRoutes import results
 
 
 __all__ = [
@@ -16,5 +17,6 @@ __all__ = [
     'quest',
     'roles',
     'sections',
-    'category'
+    'category',
+    'results'
 ]

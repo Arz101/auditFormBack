@@ -1,8 +1,6 @@
 from src.schemas import UserCreate, UserResponse, LoginResponse, UserWithRole, RoleResponse
-from src.config import get_db
 from sqlalchemy import select, and_, delete
 from src.models import User, Role
-from fastapi import Depends
 from sqlalchemy.orm import Session, selectinload
 from datetime import date
 

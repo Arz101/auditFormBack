@@ -22,7 +22,7 @@ class AuditController:
             raise HTTPException(status_code=500, detail=str(e))
 
 
-    def getAudits(self, auditDate: date, storeId: int | None, db: Session):
+    def getAudits(self, auditDate: date | None, storeId: int | None, db: Session):
         try:
             result = self.audit_repository.getAudits(auditDate, storeId, db)
             if result is None:

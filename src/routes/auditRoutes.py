@@ -18,7 +18,7 @@ def createAudit(audit_obj: AuditCreate, db: Session = Depends(get_db), _ = Depen
     return audit_controller.create_audits(audit_obj, db)
 
 @audit.get("/", response_model=list[AuditResponse], status_code=200)
-def getAudits(storeId: Optional[int], date: date, db: Session = Depends(get_db), _ = Depends(get_current_user)):
+def getAudits(storeId: Optional[int], date: Optional[date], db: Session = Depends(get_db), _ = Depends(get_current_user)):
     return audit_controller.getAudits(date, storeId, db)
 
 @audit.get("/{id}", response_model=AuditResponse, status_code=200)

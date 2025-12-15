@@ -1,10 +1,17 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from src.routes import *
-
+from src.config import test_connection
 
 def create_app():
     app = FastAPI() 
+
+    if not test_connection():
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+            detail="Database connection failed"
+        )
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],  
@@ -20,5 +27,6 @@ def create_app():
     app.include_router(roles, prefix="/roles")
     app.include_router(sections, prefix="/sections")
     app.include_router(category, prefix="/categories")
+    app.include_router(results, prefix="/results")
 
     return app
